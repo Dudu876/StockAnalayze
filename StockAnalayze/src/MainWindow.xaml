@@ -1,0 +1,8 @@
+﻿<Window x:Class="StockAnalayze.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="382.338" Width="720.025">
+    <Grid>
+        
+    </Grid>
+</Window>

@@ -4,18 +4,18 @@
         Title="MainWindow" Height="382.338" Width="617.537">
     <Grid Margin="0,1,3.333,-0.667">
         <Label Margin="64,44,302.612,275" FontSize="20" Content="Number of Stocks:" Padding="0"/>
-        <TextBox HorizontalAlignment="Left" Height="34" Margin="233,0,0,272" TextWrapping="Wrap" Text="100" VerticalAlignment="Bottom" Width="105" TabIndex="1" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <TextBox x:Name="numOfStocks" HorizontalAlignment="Left" Height="34" Margin="233,0,0,272" TextWrapping="Wrap" Text="10" VerticalAlignment="Bottom" Width="105" TabIndex="1" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
         <Label Margin="64,95,371.612,224" FontSize="20" Content="Analyze" Padding="0"/>
-        <TextBox HorizontalAlignment="Left" Height="34" Margin="139,0,0,222" TextWrapping="Wrap" Text="20" VerticalAlignment="Bottom" Width="69" TabIndex="2" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <TextBox x:Name="daysAgo" HorizontalAlignment="Left" Height="34" Margin="139,0,0,222" TextWrapping="Wrap" Text="20" VerticalAlignment="Bottom" Width="69" TabIndex="2" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
         <Label Margin="213,95,97.612,224" FontSize="20" Content="days from today backwards" Padding="0"/>
-        <Button Content="Analyze" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="167" Height="50" IsDefault="True" FontSize="25" FontFamily="Segoe UI Black" HorizontalContentAlignment="Center" Margin="216,0,224.334,42" BorderBrush="{x:Null}" BorderThickness="1"/>
+        <Button Content="Analyze" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="167" Height="50" IsDefault="True" FontSize="25" FontFamily="Segoe UI Black" HorizontalContentAlignment="Center" Margin="216,0,224.334,42" BorderBrush="{x:Null}" BorderThickness="1" Click="Button_Click"/>
         <Label Margin="64,147,347.334,172" FontSize="20" Content="Features for analysis:" Padding="0"/>
         <Label Margin="64,194,408.612,124" FontSize="20" Content="Use" Padding="0"/>
-        <TextBox HorizontalAlignment="Left" Height="34" Margin="106,0,0,122" TextWrapping="Wrap" Text="20" VerticalAlignment="Bottom" Width="69" TabIndex="2" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+        <TextBox x:Name="clusters" HorizontalAlignment="Left" Height="34" Margin="106,0,0,122" TextWrapping="Wrap" Text="20" VerticalAlignment="Bottom" Width="69" TabIndex="2" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
         <Label Margin="187,194,249.612,123" FontSize="20" Content="clusters" Padding="0"/>
-        <CheckBox Content="Open" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,156,0,0" FontSize="16"/>
-        <CheckBox Content="High" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="338,156,0,0" FontSize="16"/>
-        <CheckBox Content="Low" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="409,156,0,0" FontSize="16"/>
-        <CheckBox Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="476,156,0,0" FontSize="16"/>
+        <CheckBox x:Name="open" Content="Open" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,156,0,0" FontSize="16"/>
+        <CheckBox x:Name="high" Content="High" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="338,156,0,0" FontSize="16"/>
+        <CheckBox x:Name="low" Content="Low" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="409,156,0,0" FontSize="16"/>
+        <CheckBox x:Name="close" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="476,156,0,0" FontSize="16"/>
     </Grid>
 </Window>

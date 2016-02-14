@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockAnalayze.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,5 +26,21 @@ namespace StockAnalayze
             InitializeComponent();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            InputParams i = new InputParams();
+            i.numOfStocks = Int32.Parse(this.numOfStocks.Text);
+            i.daysAgo = Int32.Parse(this.daysAgo.Text);
+            i.clusters = Int32.Parse(this.clusters.Text);
+            i.open = (bool)open.IsChecked;
+            i.close = (bool)close.IsChecked;
+            i.high = (bool)high.IsChecked;
+            i.low = (bool)low.IsChecked;
+
+            var im = new Managers.InputManager(i);
+            im.GetInputReady();
+
+            var fm = new FilesManager();
+        }
     }
 }

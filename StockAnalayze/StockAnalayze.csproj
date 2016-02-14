@@ -61,6 +61,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\Consts.cs" />
+    <Compile Include="Common\EnumerableUtils.cs" />
+    <Compile Include="Common\FileUtils.cs" />
+    <Compile Include="Managers\FilesManager.cs" />
+    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\SSHManager.cs" />
+    <Compile Include="Models\Models.cs" />
     <Compile Include="src\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -13,24 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 namespace StockAnalayze
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for stockChart.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StockChart : UserControl
     {
-        public MainWindow()
+        public StockChart()
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ResultsWindow graphs = new ResultsWindow();
-            graphs.Show();
-        }
-
     }
 }

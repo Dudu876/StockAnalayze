@@ -13,9 +13,11 @@ namespace StockAnalayze.Managers
     class InputManager
     {
         private InputParams _inputParams;
+        public IDictionary<string,Stock> allStocksData { get; set; }
         public InputManager(InputParams i)
         {
             _inputParams = i;
+            allStocksData = new Dictionary<string, Stock>();
         }
 
         public void GetInputReady()
@@ -53,7 +55,7 @@ namespace StockAnalayze.Managers
                     }
                 }
 
-                var wasTaken = NormalizeYahooStockFile(symbolFileName,
+                var wasTaken = NormalizeYahooStockFile(symbolFileName, stockSymbol,
                                                     Consts.LINES_TO_SKIP_IN_STOCK_FILE, _inputParams.daysAgo);
                 if (wasTaken)
                 {
@@ -79,7 +81,7 @@ namespace StockAnalayze.Managers
             return stocks;
         }
 
-        private bool NormalizeYahooStockFile(string filePath, int linesToSkipInStockFile,
+        private bool NormalizeYahooStockFile(string filePath, string stockSymbol, int linesToSkipInStockFile,
                                              int wantedLines)
         {
             var allFileLines = File.ReadAllLines(filePath).Skip(linesToSkipInStockFile).ToList();
@@ -119,6 +121,9 @@ namespace StockAnalayze.Managers
 
                 return stockData;
             }).ToList();
+
+            //
+            allStocksData.Add(stockSymbol,new Stock(stockSymbol,fileFeatures));
 
             var minData = new StockData();
             var maxData = new StockData();

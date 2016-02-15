@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tamir.SharpSsh;
 
 namespace StockAnalayze.Managers
 {
-    //private readonly CommandExecuter _commandExecuter;
-    //private readonly SshShell _sshClient;
-
     class SSHManager
     {
+        private readonly SshShell _shell = null;
+        private SshExec _exec = null;
+        private SshTransferProtocolBase _sshCp = null;
+
         public SSHManager(string host, string username, string password)
         {
-            //_sshClient = new SshShell(host, username, password);
-            //_commandexecuter = new commandexecuter(_sshclient);
+            _shell = new SshShell(host, username, password);
+            _exec = new SshExec(host, username, password);
+            _sshCp = new Scp(host, username, password);
         }
     }
 }

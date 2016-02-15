@@ -44,6 +44,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Tamir.SharpSSH, Version=1.1.1.13, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -103,6 +107,9 @@
   <ItemGroup>
     <Folder Include="InputFiles\ProcessedStocks\" />
     <Folder Include="InputFiles\StockSymbols\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\Tamir.SharpSSH.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

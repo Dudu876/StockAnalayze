@@ -15,14 +15,14 @@ namespace StockAnalayze.Models
 
     public class Stock
     {
-        public Stock(string name, Dictionary<DateTime, StockData> datedValues)
+        public Stock(string name, List<StockData> values)
         {
             Name = name;
-            DatedValues = datedValues;
+            this.values = values;
         }
 
         public string Name { get; set; }
-        public IDictionary<DateTime, StockData> DatedValues { get; set; }
+        public IList<StockData> values { get; set; }
     }
 
     public class StockData

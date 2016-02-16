@@ -10,23 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using StockAnalayze.Models;
 
 namespace StockAnalayze
 {
     /// <summary>
-    /// Interaction logic for GraphsWindow.xaml
+    /// Interaction logic for ClusterView.xaml
     /// </summary>
-    public partial class ResultsWindow: Window
+    public partial class ClusterView : UserControl
     {
-        public ResultsWindow(IEnumerable<Cluster> clusters)
+        public ClusterView(Cluster cluster)
         {
             InitializeComponent();
 
-            foreach (var cluster in clusters)
+            grp.Header = "Cluster " + cluster.Id;
+
+            foreach (var stock in cluster.Stocks)
             {
-                this.resultsList.Children.Add(new ClusterView(cluster));
+                this.listCharts.Children.Add(new StockChart(stock));
             }
 
         }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Controls="clr-namespace:Schementi.Controls;assembly=Schementi.Controls.Sparkline" 
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="300">
+             d:DesignHeight="200" d:DesignWidth="300" Loaded="ViewLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -15,7 +15,7 @@
                        TextAlignment="Center" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center"/>
-        <Border Background="black" BorderThickness="2">
+        <Border Background="black" BorderThickness="1">
             <Controls:LineChart Margin="0 1" ToolTip="stockChart">
                 <Controls:Sparkline  Foreground="#FFCCCC66" x:Name="closeGraph" />
                 <Controls:Sparkline Foreground="#FFFF00FF" x:Name="openGraph" />

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using StockAnalayze.Models;
 
 namespace StockAnalayze
 {
@@ -20,9 +21,50 @@ namespace StockAnalayze
     /// </summary>
     public partial class StockChart : UserControl
     {
-        public StockChart()
+        private readonly Stock stock;
+
+        public StockChart(Stock stock)
         {
+            this.stock = stock;
             InitializeComponent();
+            this.stockName.Text = stock.Name;
+        }
+
+        private void ViewLoaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var stockVal in stock.values)
+            {
+
+                this.closeGraph.Margin = new Thickness(1);
+                this.closeGraph.LineMargin = new Thickness(1);
+
+                this.openGraph.Margin = new Thickness(1);
+                this.openGraph.LineMargin = new Thickness(1);
+
+                this.highGraph.Margin = new Thickness(1);
+                this.highGraph.LineMargin = new Thickness(1);
+
+                this.lowGraph.Margin = new Thickness(1);
+                this.lowGraph.LineMargin = new Thickness(1);
+
+
+                DateTime dt = Convert.ToDateTime(stockVal.Date);
+                if (stockVal.Open.HasValue){
+                    this.openGraph.AddTimeValue(stockVal.Open.Value, dt);
+                }
+                if (stockVal.High.HasValue)
+                {
+                    this.highGraph.AddTimeValue(stockVal.High.Value, dt);
+                } 
+                if (stockVal.Close.HasValue)
+                {
+                    this.closeGraph.AddTimeValue(stockVal.Close.Value, dt);
+                } 
+                if (stockVal.Low.HasValue)
+                {
+                    this.lowGraph.AddTimeValue(stockVal.Low.Value, dt);
+                }
+            }
         }
     }
 }

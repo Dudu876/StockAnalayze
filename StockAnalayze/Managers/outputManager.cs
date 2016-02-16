@@ -14,7 +14,7 @@ namespace StockAnalayze.Managers
 
         public OutputManager(IDictionary<string, Stock> allStocksData)
         {
-            List<string> clusterLines = File.ReadAllLines("output.txt").ToList();
+            List<string> clusterLines = File.ReadAllLines("output").ToList();
 
             this.clusters = new List<Cluster>();
             for (int j = 0; j < clusterLines.Count; j++)
@@ -23,12 +23,15 @@ namespace StockAnalayze.Managers
                 Cluster currCluster = new Cluster();
                 currCluster.Id = j + 1;
                 // Get the stocks for every cluster.
-                string[] stocksInCluster = clusterLines[j].Split(',');
+                string[] stocksInCluster = clusterLines[j].Split(' ');
 
                 for (int i = 0; i < stocksInCluster.Length; i++)
                 {
-                    currCluster.Stocks.Add(
-                        allStocksData[stocksInCluster[i]]);
+                    if (stocksInCluster[i] != String.Empty)
+                    {
+                        currCluster.Stocks.Add(
+                            allStocksData[stocksInCluster[i]]);
+                    }
                 }
 
                 clusters.Add(currCluster);

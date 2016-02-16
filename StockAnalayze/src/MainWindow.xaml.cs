@@ -1,4 +1,5 @@
 ﻿using StockAnalayze.Managers;
+using StockAnalayze.src;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace StockAnalayze
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            StatusWindow win2 = new StatusWindow();
+            win2.Show();
+
             InputParams i = new InputParams();
             i.numOfStocks = Int32.Parse(this.numOfStocks.Text);
             i.daysAgo = Int32.Parse(this.daysAgo.Text);
@@ -41,6 +45,10 @@ namespace StockAnalayze
             im.GetInputReady();
 
             var fm = new FilesManager();
+            //fm.TestRun();
+            fm.PrepareRemote();
+            fm.RunHadoop();
+            fm.RetriveOutput();
         }
     }
 }

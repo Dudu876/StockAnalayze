@@ -22,6 +22,7 @@ namespace StockAnalayze.Managers
 
         public void GetInputReady()
         {
+            FilesManager.PrepareLocal();
             var stocksFiles = getStockFiles();
             FileUtils.ProcessStockFiles(stocksFiles);
         }
@@ -122,7 +123,6 @@ namespace StockAnalayze.Managers
                 return stockData;
             }).ToList();
 
-            //
             allStocksData.Add(stockSymbol,new Stock(stockSymbol,fileFeatures));
 
             var minData = new StockData();

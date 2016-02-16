@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace StockAnalayze
 {
     /// <summary>
@@ -49,6 +50,11 @@ namespace StockAnalayze
             fm.PrepareRemote();
             fm.RunHadoop();
             fm.RetriveOutput();
+
+            var om = new OutputManager(im.allStocksData);
+            ResultsWindow graphs = new ResultsWindow(om.clusters);
+            graphs.Show();
         }
+
     }
 }

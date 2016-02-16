@@ -34,9 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Schementi.Controls.Sparkline, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DiffieHellman, Version=0.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Schementi.Controls.Sparkline.dll</HintPath>
+      <HintPath>Lib\DiffieHellman.dll</HintPath>
+    </Reference>
+    <Reference Include="Org.Mentalis.Security, Version=1.0.13.715, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Org.Mentalis.Security.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -55,26 +59,15 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFVisifire.Charts">
-      <HintPath>Lib\WPFVisifire.Charts.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Managers\OutputManager.cs" />
-    <Compile Include="src\ClusterView.xaml.cs">
-      <DependentUpon>ClusterView.xaml</DependentUpon>
+    <Compile Include="src\StatusWindow.xaml.cs">
+      <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\ResultsWindow.xaml.cs">
-      <DependentUpon>ResultsWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="src\ClusterView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="src\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,13 +83,14 @@
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\SSHManager.cs" />
     <Compile Include="Models\Models.cs" />
+    <Compile Include="Models\StatusModel.cs" />
     <Compile Include="src\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="src\ResultsWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="src\StatusWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +111,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -130,11 +123,14 @@
   <ItemGroup>
     <Folder Include="InputFiles\ProcessedStocks\" />
     <Folder Include="InputFiles\StockSymbols\" />
+    <Folder Include="JavaFiles\" />
+    <Folder Include="Output\" />
+    <Folder Include="TestInput\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Lib\Schementi.Controls.Sparkline.dll" />
+    <Content Include="Lib\DiffieHellman.dll" />
+    <Content Include="Lib\Org.Mentalis.Security.dll" />
     <Content Include="Lib\Tamir.SharpSSH.dll" />
-    <Resource Include="output.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

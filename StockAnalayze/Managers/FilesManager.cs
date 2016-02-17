@@ -113,16 +113,7 @@ namespace StockAnalayze.Managers
         public void HadoopJobStatus()
         {
             StatusModel.Instance.Status = "Checking the hadoop status";
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    Thread.Sleep(1000);
-            //    StatusModel.Instance.setProgress(i, 100);
-            //    if (i == 99)
-            //    {
-            //        i = 0;
-            //    }
-            //}
-
+            
             _sshManager.CheckJobStatus();
         }
 

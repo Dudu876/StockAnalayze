@@ -8,7 +8,7 @@ namespace StockAnalayze.Common
 {
     class Consts
     {
-        public const string DEFAULT_HOST = "10.0.0.13";
+        public const string DEFAULT_HOST = "10.0.0.12";
         public const string DEFAULT_USERNAME = "training";
         public const string DEFAULT_PASSWORD = "training";
 

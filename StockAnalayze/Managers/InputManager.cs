@@ -20,7 +20,7 @@ namespace StockAnalayze.Managers
             allStocksData = new Dictionary<string, Stock>();
         }
 
-        public void GetInputReady()
+        public async void GetInputReady()
         {
             FilesManager.PrepareLocal();
             var stocksFiles = getStockFiles();
@@ -29,15 +29,18 @@ namespace StockAnalayze.Managers
 
         private IEnumerable<string> getStockFiles()
         {
+            StatusModel.Instance.Status = "Getting the stocks symbols file";
             var stockSymbols =
                 GetRandomStockSymbols((int)Math.Ceiling(_inputParams.numOfStocks * Consts.SYMBOL_NUMBER_BUFFER_FACTOR)).ToList();
 
             var stockFiles = new List<string>();
 
+            StatusModel.Instance.Status = "Downloading stocks data";
             for (var downloadCount = 0;
                  downloadCount < stockSymbols.Count && stockFiles.Count < _inputParams.numOfStocks;
                  downloadCount++)
             {
+                StatusModel.Instance.setProgress(downloadCount,stockSymbols.Count);
                 var stockSymbol = stockSymbols[downloadCount];
                 var downloadUrl = string.Format(Consts.YAHOO_FINANCE_URL_FORMAT, stockSymbol);
 

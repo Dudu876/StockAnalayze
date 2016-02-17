@@ -28,7 +28,7 @@ namespace StockAnalayze
             InitializeComponent();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void analyze()
         {
             StatusWindow win2 = new StatusWindow();
             win2.Show();
@@ -53,6 +53,42 @@ namespace StockAnalayze
             var om = new OutputManager(im.allStocksData);
             ResultsWindow graphs = new ResultsWindow(om.clusters);
             graphs.Show();
+        }
+
+        private string checkFeilds()
+        {
+            if (this.numOfStocks.Text == string.Empty)
+            {
+                return "The number of stocks must be filled";
+            }
+            else if(this.daysAgo.Text == string.Empty)
+            {
+                return "The amount of days must be filled";
+            }
+            else if (this.clusters.Text == string.Empty)
+            {
+                return "Clusters number is not filled";
+            }
+            else if (!this.close.IsChecked.Value && !this.high.IsChecked.Value && 
+                    !this.low.IsChecked.Value && !this.open.IsChecked.Value)
+            {
+                return "One of the checkboxes MUST be checkd";
+            }
+
+            return string.Empty;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string msg = checkFeilds();
+            if (msg != string.Empty)
+            {
+                MessageBox.Show(msg);
+            }
+            else
+            {
+                analyze();
+            }
         }
 
     }

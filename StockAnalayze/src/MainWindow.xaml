@@ -13,9 +13,9 @@
         <Label Margin="64,194,408.612,124" FontSize="20" Content="Use" Padding="0"/>
         <TextBox x:Name="clusters" HorizontalAlignment="Left" Height="34" Margin="106,0,0,122" TextWrapping="Wrap" Text="20" VerticalAlignment="Bottom" Width="69" TabIndex="2" FontWeight="Medium" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
         <Label Margin="187,194,249.612,123" FontSize="20" Content="clusters" Padding="0"/>
-        <CheckBox x:Name="open" Content="Open" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,156,0,0" FontSize="16"/>
-        <CheckBox x:Name="high" Content="High" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="338,156,0,0" FontSize="16"/>
-        <CheckBox x:Name="low" Content="Low" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="409,156,0,0" FontSize="16"/>
-        <CheckBox x:Name="close" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="476,156,0,0" FontSize="16"/>
+        <CheckBox x:Name="open" Content="Open" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,156,0,0" FontSize="16" IsChecked="True"/>
+        <CheckBox x:Name="high" Content="High" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="338,156,0,0" FontSize="16" IsChecked="True"/>
+        <CheckBox x:Name="low" Content="Low" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="409,156,0,0" FontSize="16" IsChecked="True"/>
+        <CheckBox x:Name="close" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="476,156,0,0" FontSize="16" IsChecked="True"/>
     </Grid>
 </Window>

@@ -28,7 +28,7 @@ namespace StockAnalayze
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             StatusWindow win2 = new StatusWindow();
             win2.Show();
@@ -43,7 +43,7 @@ namespace StockAnalayze
             i.low = (bool)low.IsChecked;
 
             var im = new Managers.InputManager(i);
-            im.GetInputReady();
+            //await Task.Run(() => im.GetInputReady());
 
             var fm = new FilesManager();
             //fm.TestRun();
@@ -54,6 +54,13 @@ namespace StockAnalayze
             var om = new OutputManager(im.allStocksData);
             ResultsWindow graphs = new ResultsWindow(om.clusters);
             graphs.Show();
+            //var s = await fm.TestRun();
+            await Task.Run(() => fm.TestRun());
+            //await Task.Run(() => fm.Start());
+            //fm.PrepareRemote();
+            //fm.RunHadoop();
+            //fm.RetriveOutput();
+            win2.Close();
         }
 
     }

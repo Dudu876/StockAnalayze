@@ -1,9 +1,11 @@
 ﻿using StockAnalayze.Common;
+using StockAnalayze.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Tamir.SharpSsh;
 
@@ -37,10 +39,13 @@ namespace StockAnalayze.Managers
         public void CopyFilesToRemote(List<FileInfo> files, string remotePath)
         {
             _sshCp.Connect();
-
+            int i = 0;
+            StatusModel.Instance.Status = "Copying files";
             foreach (FileInfo file in files)
             {
                 _sshCp.Put(file.FullName, Path.Combine(remotePath, file.Name));
+                i++;
+                StatusModel.Instance.setProgress(i, files.Count);
             }
 
             _sshCp.Close();
@@ -75,14 +80,58 @@ namespace StockAnalayze.Managers
         {
             runCommand($"jar -cvf {fullJarPath} {classFilesDirectoryPath}*class");
         }
-        public void runHadoop(string jarPath, string mainClass, string hadoopInput, string hadoopOutput)
+        public void RunHadoop(string jarPath, string mainClass, string hadoopInput, string hadoopOutput)
         {
             string i = hadoopInput.TrimEnd('/');
             string o = hadoopOutput.TrimEnd('/');
             runCommand($"hadoop jar {jarPath} {mainClass} {i} {o}");
         }
 
-        private void runCommand(string command, string stdout = "", string stderr = "")
+        public void CheckJobStatus()
+        {
+            string stdout = "";
+            string stderr = "";
+            SshShell shell = new SshShell(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
+            SshExec exec = new SshExec(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
+            Thread.Sleep(5000);
+
+            stdout = runStatusCommand(shell, exec, "mapred job -list");
+            string jobId = stdout.Split(null).ToList()[20];
+
+            
+            double map;
+            double reduce;
+            while (true)
+            {
+                stdout = runStatusCommand(shell, exec, $"mapred job -status {jobId}");
+                map = Double.Parse((stdout.Split('\n').Where(line => 
+                    line.Contains("map()")).First().ToString()).Split(null)[2]) * 100;
+                reduce = Double.Parse((stdout.Split('\n').Where(line =>
+                    line.Contains("reduce()")).First().ToString()).Split(null)[2]) * 100;
+
+                StatusModel.Instance.setProgress((int)((reduce + map) / 2) , 100);
+                StatusModel.Instance.Status = $"Map {(int)map}% - Reduce {(int)reduce}%";
+                if (reduce == 100) break;
+                Thread.Sleep(3000);
+            }
+        }
+
+        private string runStatusCommand(SshShell shell, SshExec exec, string command)
+        {
+            string stdout = "";
+            string stderr = "";
+            shell.Connect();
+            shell.RedirectToConsole();
+            exec.Connect();
+
+            int ret = exec.RunCommand(command, ref stdout, ref stderr);
+
+            exec.Close();
+            shell.Close();
+            return stdout;
+        }
+
+        public void runCommand(string command, string stdout = "", string stderr = "")
         {
             _shell.Connect();
             _shell.RedirectToConsole();

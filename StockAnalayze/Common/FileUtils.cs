@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockAnalayze.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace StockAnalayze.Common
     {
         public static IEnumerable<string> ProcessStockFiles(IEnumerable<string> stockFiles)
         {
+            StatusModel.Instance.Status = "Proccesing the stocks data";
             var processedStockFiles = new List<string>();
 
             var groupedStockFiles = stockFiles.Split(10);

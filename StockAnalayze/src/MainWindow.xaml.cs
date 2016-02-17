@@ -43,24 +43,16 @@ namespace StockAnalayze
             i.low = (bool)low.IsChecked;
 
             var im = new Managers.InputManager(i);
-            //await Task.Run(() => im.GetInputReady());
+            await Task.Run(() => im.GetInputReady());
 
             var fm = new FilesManager();
-            //fm.TestRun();
-            fm.PrepareRemote();
-            fm.RunHadoop();
-            fm.RetriveOutput();
+            //await Task.Run(() => fm.TestRun());
+            await Task.Run(() => fm.Start());
+            win2.Close();
 
             var om = new OutputManager(im.allStocksData);
             ResultsWindow graphs = new ResultsWindow(om.clusters);
             graphs.Show();
-            //var s = await fm.TestRun();
-            await Task.Run(() => fm.TestRun());
-            //await Task.Run(() => fm.Start());
-            //fm.PrepareRemote();
-            //fm.RunHadoop();
-            //fm.RetriveOutput();
-            win2.Close();
         }
 
     }

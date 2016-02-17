@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using StockAnalayze.Models;
+using StockAnalayze.Common;
 
 namespace StockAnalayze.Managers
 {
@@ -14,7 +15,7 @@ namespace StockAnalayze.Managers
 
         public OutputManager(IDictionary<string, Stock> allStocksData)
         {
-            List<string> clusterLines = File.ReadAllLines("output").ToList();
+            List<string> clusterLines = File.ReadAllLines(Consts.LOCAL_OUTPUT_FILENAME).ToList();
 
             this.clusters = new List<Cluster>();
             for (int j = 0; j < clusterLines.Count; j++)

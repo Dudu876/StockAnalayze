@@ -8,7 +8,7 @@ namespace StockAnalayze.Common
 {
     class Consts
     {
-        public const string DEFAULT_HOST = "10.0.0.12";
+        public const string DEFAULT_HOST = "10.0.0.16";
         public const string DEFAULT_USERNAME = "training";
         public const string DEFAULT_PASSWORD = "training";
 
@@ -50,9 +50,10 @@ namespace StockAnalayze.Common
         public static readonly string REMOTE_OUTPUT_PATH = $"{REMOTE_PATH_BASE}/";
         //public static readonly string HADOOP_OUTPUT_PATH = $"{HADOOP_PATH_BASE}/output/kmeans/vectors/";
         public static readonly string HADOOP_OUTPUT_PATH = $"{HADOOP_PATH_BASE}/output/";
+        public static readonly string LOCAL_OUTPUT_PATH = $@"..\..\{OUTPUT_FILES_DIR_NAME}\";
 
         public static readonly string HADOOP_OUTPUT_FILENAME = $"{REMOTE_OUTPUT_PATH}output/part-r-00000";
-        public static readonly string LOCAL_OUTPUT_FILENAME = $@"..\..\{OUTPUT_FILES_DIR_NAME}\Result";
+        public static readonly string LOCAL_OUTPUT_FILENAME = $@"..\..\{OUTPUT_FILES_DIR_NAME}\output";
 
     }
 }

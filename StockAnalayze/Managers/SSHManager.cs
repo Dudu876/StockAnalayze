@@ -93,7 +93,7 @@ namespace StockAnalayze.Managers
             string stderr = "";
             SshShell shell = new SshShell(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
             SshExec exec = new SshExec(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
 
             stdout = runStatusCommand(shell, exec, "mapred job -list");
             string jobId = stdout.Split(null).ToList()[20];

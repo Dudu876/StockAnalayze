@@ -40,7 +40,7 @@ namespace StockAnalayze.Managers
                  downloadCount < stockSymbols.Count && stockFiles.Count < _inputParams.numOfStocks;
                  downloadCount++)
             {
-                StatusModel.Instance.setProgress(downloadCount,stockSymbols.Count);
+                StatusModel.Instance.setProgress(stockFiles.Count, _inputParams.numOfStocks);
                 var stockSymbol = stockSymbols[downloadCount];
                 var downloadUrl = string.Format(Consts.YAHOO_FINANCE_URL_FORMAT, stockSymbol);
 
@@ -78,9 +78,13 @@ namespace StockAnalayze.Managers
                 symbols = webClient.DownloadString(Consts.NASDAQ_SYMBOLS_URL);
             }
 
+            //var stocks = symbols.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+            //                    .Skip(1).Shuffle(new Random()).Take(numberOfStocks)
+            //                    .Select(stockLine => stockLine.Split(Consts.NASDAQ_STOCK_SYMBOL_SEPERATOR)[0]);
             var stocks = symbols.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                                .Skip(1).Shuffle(new Random()).Take(numberOfStocks)
+                                .Skip(1).Take(numberOfStocks)
                                 .Select(stockLine => stockLine.Split(Consts.NASDAQ_STOCK_SYMBOL_SEPERATOR)[0]);
+
 
             return stocks;
         }

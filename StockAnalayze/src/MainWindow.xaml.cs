@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace StockAnalayze
 {
     /// <summary>
@@ -41,17 +42,18 @@ namespace StockAnalayze
             i.high = (bool)high.IsChecked;
             i.low = (bool)low.IsChecked;
 
-            var im = new Managers.InputManager(i);            
-            //await Task.Run(() => im.GetInputReady());
+            var im = new Managers.InputManager(i);
+            await Task.Run(() => im.GetInputReady());
 
             var fm = new FilesManager();
-            //var s = await fm.TestRun();
-            await Task.Run(() => fm.TestRun());
-            //await Task.Run(() => fm.Start());
-            //fm.PrepareRemote();
-            //fm.RunHadoop();
-            //fm.RetriveOutput();
+            //await Task.Run(() => fm.TestRun());
+            await Task.Run(() => fm.Start());
             win2.Close();
+
+            var om = new OutputManager(im.allStocksData);
+            ResultsWindow graphs = new ResultsWindow(om.clusters);
+            graphs.Show();
         }
+
     }
 }

@@ -11,6 +11,10 @@ namespace StockAnalayze.Models
     {
         public int Id { get; set; }
         public IList<Stock> Stocks { get; set; }
+        public Cluster()
+        {
+            this.Stocks = new List<Stock>();
+        }
     }
 
     public class Stock

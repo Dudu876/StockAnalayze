@@ -35,7 +35,7 @@ public class KMeansMapper extends
 		IntWritable value = new IntWritable();
 		
 		while (reader.next(key, value)) {
-			LOG.error(key.getCenter() + " " + key.toString());
+			LOG.info(key.getCenter() + " " + key.toString());
 			centers.add(new ClusterCenter(key));
 		}
 		
@@ -46,20 +46,16 @@ public class KMeansMapper extends
 	protected void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
 		Vector vector = new Vector(value);
-		LOG.error("ENTER MAPPER");
-		LOG.error("VALUE " + value.toString());
 		ClusterCenter nearest = null;
 		double nearestDistance = Double.MAX_VALUE;
 		for (ClusterCenter c : centers) {
 			double dist = DistanceMeasurer.measureDistance(c, vector);
-			LOG.error("CALC DIST");
 			if (nearest == null || nearestDistance > dist) {
 				nearest = c;
 				nearestDistance = dist;
 			} 
 		}
 		
-		LOG.error("NOY:" + value.toString());
 		context.write(nearest, vector);
 	}
 }

@@ -11,8 +11,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class CanopyMapper extends Mapper<LongWritable, Text, ClusterCenter, Vector> {
 	static enum CountersEnum { MAP_COUNT }
-	static enum CounterEnum { DIST_COUNT }
-	static enum SumEnum { MAP_SUM }
 	List<ClusterCenter> centers = new LinkedList<ClusterCenter>();
 	
 	@Override
@@ -22,18 +20,16 @@ public class CanopyMapper extends Mapper<LongWritable, Text, ClusterCenter, Vect
 		context.getCounter(CountersEnum.MAP_COUNT).increment(1);
 		
 		Vector vector = new Vector(value);
-		CanopyJob.LOG.error("Start " + vector.getStockName() + " centers now " + centers.size());
+		JobRunner.LOG.info("Start " + vector.getStockName() + " centers now " + centers.size());
 		boolean belongToCenter = false;
 		double distance;
 		for (ClusterCenter currCenter : centers){
 			
 			distance = DistanceMeasurer.measureDistance(currCenter.getCenter(), vector) / vector.getVector().length;
-			context.getCounter(CounterEnum.DIST_COUNT).increment(1);
-			context.getCounter(SumEnum.MAP_SUM).increment((long) distance);
-			if (distance <= CanopyJob.T2) {
+			if (distance <= JobRunner.T2) {
 				belongToCenter = true;
 				break;
-			} else if (distance <= CanopyJob.T1) {
+			} else if (distance <= JobRunner.T1) {
 				context.write(new ClusterCenter(vector), vector);
 				belongToCenter = true;
 				break;

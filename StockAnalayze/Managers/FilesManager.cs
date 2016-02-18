@@ -13,9 +13,11 @@ namespace StockAnalayze.Managers
     class FilesManager
     {
         private readonly SSHManager _sshManager;
+        private int clusters;
 
-        public FilesManager()
+        public FilesManager(int clusters)
         {
+            this.clusters = clusters;
             _sshManager = new SSHManager(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
         }
 
@@ -32,15 +34,17 @@ namespace StockAnalayze.Managers
             StatusModel.Instance.Status = "Preparing remote files";
             _sshManager.DeleteDirectory(Consts.REMOTE_INPUT_PATH);
             _sshManager.DeleteDirectory(Consts.REMOTE_JAVA_PATH);
-            _sshManager.DeleteDirectory(Consts.REMOTE_OUTPUT_PATH);
+            //_sshManager.DeleteDirectory(Consts.REMOTE_OUTPUT_PATH);
 
             _sshManager.DeleteHadoopDirectory(Consts.HADOOP_PATH_BASE);
 
-            _sshManager.CreateDirectory(Consts.REMOTE_PATH_BASE);
+            //_sshManager.CreateDirectory(Consts.REMOTE_PATH_BASE);
             _sshManager.CreateDirectory(Consts.REMOTE_INPUT_PATH);
             _sshManager.CreateDirectory(Consts.REMOTE_JAVA_PATH);
 
             _sshManager.CreateHadoopDirectory(Consts.HADOOP_PATH_BASE);
+            _sshManager.CreateHadoopDirectory(Consts.HADOOP_PATH_BASE + "/anna");
+            _sshManager.CreateHadoopDirectory(Consts.HADOOP_PATH_BASE + "/anna/final");
             //_sshManager.CreateHadoopDirectory(Consts.HADOOP_INPUT_PATH);
 
             _sshManager.CopyFilesToRemote(new DirectoryInfo(Consts.STOCKS_PROCESSED_PATH_BASE).GetFiles().ToList(),
@@ -56,20 +60,19 @@ namespace StockAnalayze.Managers
             _sshManager.CreateJarRemotely(Consts.REMOTE_JAVA_PATH, Consts.REMOTE_JAR_PATH);
         }
 
-        public async void RunHadoop()
+        public async void RunHadoop(int clusters)
         {
             StatusModel.Instance.Status = "Run hadoop";
             _sshManager.RunHadoop(Consts.REMOTE_JAR_PATH, 
-                                  Consts.MAIN_CLASS_HADOOP, 
-                                  Consts.HADOOP_INPUT_PATH, 
-                                  Consts.HADOOP_OUTPUT_PATH);
+                                  Consts.MAIN_CLASS_HADOOP,
+                                  clusters.ToString());
         }
 
         public void RetriveOutput()
         {
             StatusModel.Instance.Status = "Retrive output files";
-            _sshManager.GetHadoopFiles(Consts.HADOOP_OUTPUT_PATH, Consts.REMOTE_OUTPUT_PATH);
-            _sshManager.CopyFileFromRemote(Consts.LOCAL_OUTPUT_FILENAME, Consts.HADOOP_OUTPUT_FILENAME);
+            //_sshManager.GetHadoopFiles(Consts.HADOOP_OUTPUT_PATH, Consts.REMOTE_OUTPUT_PATH);
+            _sshManager.CopyFileFromRemote(Consts.LOCAL_OUTPUT_FILENAME, Consts.REMOTE_OUTPUT_FILENAME);
         }
 
         public async void TestRun()
@@ -99,7 +102,7 @@ namespace StockAnalayze.Managers
             _sshManager.CompileJava(Consts.REMOTE_JAVA_PATH);
             _sshManager.CreateJarRemotely(Consts.REMOTE_JAVA_PATH, Consts.REMOTE_JAR_PATH);
 
-            Task t = Task.Factory.StartNew(() => RunHadoop());
+            Task t = Task.Factory.StartNew(() => RunHadoop(5));
             HadoopJobStatus();
             await t;
 
@@ -120,7 +123,7 @@ namespace StockAnalayze.Managers
         public async Task<bool> Start()
         {
             PrepareRemote();
-            Task t = Task.Factory.StartNew(() => RunHadoop());
+            Task t = Task.Factory.StartNew(() => RunHadoop(this.clusters));
             HadoopJobStatus();
             await t;
             RetriveOutput();

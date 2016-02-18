@@ -40,7 +40,7 @@ namespace StockAnalayze.Managers
                  downloadCount < stockSymbols.Count && stockFiles.Count < _inputParams.numOfStocks;
                  downloadCount++)
             {
-                StatusModel.Instance.setProgress(stockFiles.Count, _inputParams.numOfStocks);
+                StatusModel.Instance.setProgress(stockFiles.Count + 1, _inputParams.numOfStocks);
                 var stockSymbol = stockSymbols[downloadCount];
                 var downloadUrl = string.Format(Consts.YAHOO_FINANCE_URL_FORMAT, stockSymbol);
 
@@ -55,6 +55,7 @@ namespace StockAnalayze.Managers
                     catch (Exception e)
                     {
                         // TODO: Log SYMBOL NOT FOUND
+                        Console.WriteLine($"Symbol not found - {symbolFileName}");
                         continue;
                     }
                 }

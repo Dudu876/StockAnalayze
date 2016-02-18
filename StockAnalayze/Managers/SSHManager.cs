@@ -64,7 +64,7 @@ namespace StockAnalayze.Managers
         {
             string r = remotePath.TrimEnd('/');
             string h = hadoopPath.TrimEnd('/');
-            runCommand($"hadoop fs -put {r} {h}");
+            runCommand($"hadoop fs -put {r}/* {h}");
         }
         public void GetHadoopFiles(string hadoopPath, string remotePath)
         {
@@ -80,40 +80,53 @@ namespace StockAnalayze.Managers
         {
             runCommand($"jar -cvf {fullJarPath} {classFilesDirectoryPath}*class");
         }
-        public void RunHadoop(string jarPath, string mainClass, string hadoopInput, string hadoopOutput)
+        public void RunHadoop(string jarPath, string mainClass, string clusters)
         {
-            string i = hadoopInput.TrimEnd('/');
-            string o = hadoopOutput.TrimEnd('/');
-            runCommand($"hadoop jar {jarPath} {mainClass} {i} {o}");
+            //string i = hadoopInput.TrimEnd('/');
+            //string o = hadoopOutput.TrimEnd('/');
+            runCommand($"hadoop jar {jarPath} {mainClass} {clusters}");
         }
 
         public void CheckJobStatus()
         {
             string stdout = "";
-            string stderr = "";
+            //string stderr = "";
+            bool atleastOne = false;
             SshShell shell = new SshShell(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
             SshExec exec = new SshExec(Consts.DEFAULT_HOST, Consts.DEFAULT_USERNAME, Consts.DEFAULT_PASSWORD);
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
 
-            stdout = runStatusCommand(shell, exec, "mapred job -list");
-            string jobId = stdout.Split(null).ToList()[20];
-
-            
-            double map;
-            double reduce;
-            while (true)
+            string jobId;
+            int runningJobs = 0;
+            while (!atleastOne || runningJobs != 0)
             {
-                stdout = runStatusCommand(shell, exec, $"mapred job -status {jobId}");
-                map = Double.Parse((stdout.Split('\n').Where(line => 
-                    line.Contains("map()")).First().ToString()).Split(null)[2]) * 100;
-                reduce = Double.Parse((stdout.Split('\n').Where(line =>
-                    line.Contains("reduce()")).First().ToString()).Split(null)[2]) * 100;
+                stdout = runStatusCommand(shell, exec, "mapred job -list");
+                runningJobs = Int32.Parse(stdout.Split(null).ToList()[0]);
 
-                StatusModel.Instance.setProgress((int)((reduce + map) / 2) , 100);
-                StatusModel.Instance.Status = $"Map {(int)map}% - Reduce {(int)reduce}%";
-                if (reduce == 100) break;
-                Thread.Sleep(3000);
+                if (runningJobs != 0)
+                {
+                    atleastOne = true;
+                    jobId = stdout.Split(null).ToList().Where(line => line.Contains("job_")).First();
+
+                    double map;
+                    double reduce;
+                    while (true)
+                    {
+                        stdout = runStatusCommand(shell, exec, $"mapred job -status {jobId}");
+                        map = Double.Parse((stdout.Split('\n').Where(line =>
+                            line.Contains("map()")).First().ToString()).Split(null)[2]) * 100;
+                        reduce = Double.Parse((stdout.Split('\n').Where(line =>
+                            line.Contains("reduce()")).First().ToString()).Split(null)[2]) * 100;
+
+                        StatusModel.Instance.setProgress((int)((reduce + map) / 2), 100);
+                        StatusModel.Instance.Status = $"Map {(int)map}% - Reduce {(int)reduce}%";
+                        if (reduce == 100) break;
+                        Thread.Sleep(500);
+                    }
+                }
             }
+
+            StatusModel.Instance.Status = "Finished MapReduce!";
         }
 
         private string runStatusCommand(SshShell shell, SshExec exec, string command)

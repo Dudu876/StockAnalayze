@@ -45,7 +45,7 @@ namespace StockAnalayze
             var im = new Managers.InputManager(i);
             await Task.Run(() => im.GetInputReady());
 
-            var fm = new FilesManager();
+            var fm = new FilesManager(i.clusters);
             //await Task.Run(() => fm.TestRun());
             await Task.Run(() => fm.Start());
             win2.Close();

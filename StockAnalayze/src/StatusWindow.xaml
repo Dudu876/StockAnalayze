@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Analayzing..." Height="171.711" Width="477.632" ResizeMode="NoResize">
     <Grid>
-        <ProgressBar HorizontalAlignment="Left" Height="17" Margin="76,82,0,0" VerticalAlignment="Top" Width="309" Value="{Binding Path=Progress, Mode=TwoWay}"/>
-        <Label x:Name="label" Content="{Binding Path=Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="76,34,0,0" VerticalAlignment="Top" Height="30" Width="309"/>
+        <ProgressBar HorizontalAlignment="Left" Height="50" Margin="0,93,0,0" VerticalAlignment="Top" Width="472" Value="{Binding Path=Progress, Mode=TwoWay}"/>
+        <Label x:Name="label" Content="{Binding Path=Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,23,0,0" VerticalAlignment="Top" Height="30" Width="309"/>
 
     </Grid>
 </Window>

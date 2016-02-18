@@ -27,7 +27,7 @@ namespace StockAnalayze
         {
             InitializeComponent();
 
-            grp.Header = "Cluster " + cluster.Id;
+            grp.Header = $"Cluster {cluster.Id} ({ cluster.Stocks.Count})";
 
             foreach (var stock in cluster.Stocks)
             {

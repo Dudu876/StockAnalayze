@@ -13,9 +13,6 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import solution.ClusterCenter;
-import solution.Vector;
-
 // calculate a new clustercenter for these vertices
 public class KMeansReducer extends
 		Reducer<ClusterCenter, Vector, ClusterCenter, Vector> {
@@ -59,20 +56,18 @@ public class KMeansReducer extends
 	}
 
 	@Override
-	protected void cleanup(Context context) throws IOException,
-			InterruptedException {
+	protected void cleanup(Context context) throws IOException, InterruptedException {
 		super.cleanup(context);
 		Configuration conf = context.getConfiguration();
 		Path outPath = new Path(conf.get("centroid.path"));
 		FileSystem fs = FileSystem.get(conf);
 		fs.delete(outPath, true);
-		final SequenceFile.Writer out = SequenceFile.createWriter(fs,
-				context.getConfiguration(), outPath, ClusterCenter.class,
-				IntWritable.class);
+		final SequenceFile.Writer out = SequenceFile.createWriter(fs, context.getConfiguration(), outPath, 
+																  ClusterCenter.class, IntWritable.class);
 		final IntWritable value = new IntWritable(0);
 		for (ClusterCenter center : centers) {
 			out.append(center, value);
-			LOG.error(center.getCenter());
+			LOG.info(center.getCenter());
 		}
 		out.close();
 	}
